@@ -1,6 +1,8 @@
-The algorithms described here forms part of the Big Data Analytics course taught as part of the MSc in Data Science and Computing.
+# Map Reduce
 
-The book used was:
-Mining of the Massive Datasets by Jure Leskovec, Anand Rajaraman and Jeffrey David Ullman.
+The algorithms described here forms part of the Big Data Analytics course - Sem III paper for MSc in Data Science and Computing at SSSIHL.
 
-The practical part was focused on Hadoop environment, thus elements specific to Haddop may be encountered time and again.
+The book used:
+> Mining of the Massive Datasets by Jure Leskovec, Anand Rajaraman and Jeffrey David Ullman.
+
+The practical part was focused on Hadoop environment, thus elements specific to Hadoop may be encountered time and again.
