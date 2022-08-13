@@ -7,7 +7,7 @@
 ### **Elements:**
 an element is considered as the fundamental unit of files and no element is stored across multiple chunks. They can by of any data-type.
 ### **Chunks:**
- is a collection of elements and are considered as the basic units of storage in DFS.
+ are a collection of elements and are considered as the basic units of storage in DFS.
  - The size of the chunks can be specified by the user, typical chunk size in Hadoop DFS is 64MB.
  - A file can be stored in multiple chunks.
  - In case the data size is smaller than the chunk size, still the whole chunk is used to store that data.

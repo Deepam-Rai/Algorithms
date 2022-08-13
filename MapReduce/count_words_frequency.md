@@ -23,7 +23,15 @@ To count the number of occurrences of each word in the document.
 ```
 Map Algorithm:
 
-Map( (line,line))
+Map( (chunk,chunk))
+{
+    for each line in chunk:
+    {
+        MyMap( (line,line))
+    }
+}
+
+MyMap( (line,line))
 {
     for each word in the line:
     {
@@ -43,15 +51,23 @@ The below input comes from all intermediate files of all Map tasks.
 Here for each unique word following is done:
 1. Get all the values for that unique word from the intermediate files from all Map tasks.
 2. Create (word, [1,1,...,1]) pair and provide to Reduce function.
->Output: (word, [1,1,...,1,1]) for each unique word in the document.
+>Output: (word, [1,1,...,1,1]) for each unique word in the document and append it into reduce input file.
 ## **Reduce:**
->Input: (word, [1,1,...,1,1]) for each unique word in the document.
+>Input: (reduce_input_file) created after sort and shuffle.
 
-Here we just need to add all 1s.
 ```
 Reduce Algorithm:
 
-Reduce( (word, list_of_values))
+Reduce( (reduce_input_file, reduce_input_file))
+{
+    for each line in reduce_input_file:
+    {
+        #Here each line is ( word, [1,1,...,1]) pair
+        MyReduce( (word, list_of_values))
+    }
+}
+
+MyReduce( (word, list_of_values))
 {
     number_of_occurrences = 0
     for value in list_of_values:
