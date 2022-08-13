@@ -7,8 +7,8 @@
 ### **Elements:**
 an element is considered as the fundamental unit of files and no element is stored across multiple chunks. They can by of any data-type.
 ### **Chunks:**
- is a collection of elemtns and are considered as the basic units of storage in DFS.
- - The size of the chunks can be specified by the user, typcial chunk size in Hadoop DFS is 64MB.
+ is a collection of elements and are considered as the basic units of storage in DFS.
+ - The size of the chunks can be specified by the user, typical chunk size in Hadoop DFS is 64MB.
  - A file can be stored in multiple chunks.
  - In case the data size is smaller than the chunk size, still the whole chunk is used to store that data.
  - They are replicated at multiple compute nodes to increase the reliability of the system, the compute nodes holding replicas should be in different racks.
@@ -32,7 +32,7 @@ an element is considered as the fundamental unit of files and no element is stor
 ### **Combiners:**
  are the task run at the output of each Map task.
  - Users can implement this function, by default they are identity functions.
- - They are helpful if the operation performed at Reduce task is Associative and Commutative in nature, as then we can perform part of that task at each Map task running node itself, thus reducing the workload for Reduce task and also benefitting parallelism(combiners running paralley at different nodes).
+ - They are helpful if the operation performed at Reduce task is Associative and Commutative in nature, as then we can perform part of that task at each Map task running node itself, thus reducing the workload for Reduce task and also benefitting parallelism(combiners running in parallel at different nodes).
 
 ### **Hashing (key, value) Pair:**
 the (key, value) pairs are hashed into multiple intermediate files.
@@ -44,7 +44,7 @@ are the files located locally(not in DFS) at the compute node and holds a part o
 
 
 ### **Sort and Shuffle:**
- refers to the phase inbetween Map and Reduce and outputs key and its value list as a pair for each unique key.
+ refers to the phase in between Map and Reduce and outputs key and its value list as a pair for each unique key.
  - This phase is carried out by the MapReduce framework.
 
 ### **Reduce:**
@@ -60,7 +60,7 @@ are the files located locally(not in DFS) at the compute node and holds a part o
  - Even after assigning task to worker nodes, master node still keeps pinging them to check failure of nodes.
 
 **Worker node:** is the node on which the tasks(Map, Reduce) are executed by the master.
- - Following the Big Data principle:_"Bring the algorithm to the data."_ the Map task is run on the worker node who posess the data chunk in context.
+ - Following the Big Data principle:_"Bring the algorithm to the data."_ the Map task is run on the worker node who possess the data chunk in context.
 
 ### **Name and Data nodes:**
 **Name node:** contains the metadata of the chunks.
