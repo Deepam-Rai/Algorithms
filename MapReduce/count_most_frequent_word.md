@@ -1,8 +1,8 @@
 # **Counting the most frequent word in the Document**
 
 # **Set up:**
-The document is stored in 'n' chunks.
-Number of Map tasks run = n
+- The document is stored in 'n' chunks.
+- Number of Map tasks run = n
 
 # **Solution:**
 
@@ -21,7 +21,7 @@ Number of Map tasks run = n
         **Reduce:** Because all words and frequency is coming to a single reduce function at once, we can compare them easily. Though this also puts load on just one single reduce in this second phase.
 
 # **First Phase:**
-## **Map1:**
+## **Map_First:**
 >Input: (line, line) for each line in the chunk.
 ```
 Map( (chunk,chunk))
@@ -40,7 +40,7 @@ MyMap( (line,line))
 }
 ```
 >Output: (word,1) for each word in the line given.
-## **Reduce1:**
+## **Reduce_Reduce:**
 >Input: (word, [1,1,..,1]) for each unique word in the document.
 ```
 Reduce( (word, list_of_values))
@@ -56,7 +56,7 @@ Reduce( (word, list_of_values))
 >Output: (word,frequency) for a 'word' appearing 'frequency' many times in the document.
 
 # **Second Phase:**
-## **Map2:**
+## **Map_Second:**
 >Input: (word,n) for each unique word in the document.
 ```
 Map( (word,n))
@@ -66,7 +66,7 @@ Map( (word,n))
 ```
 >Output: (fixed_key, (word,n)) same fixed_key is used for all words.
 
-## **Reduce2:**
+## **Reduce_Second:**
 >Input: ( fixed_key, [(word1,f1),(word2,f2),... as many as unique words in the document])
 ```
 Reduce( (fixed_key,list_of_values))
