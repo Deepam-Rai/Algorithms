@@ -22,11 +22,10 @@
 ```
 #Taking the document as RDD
 >>> rdd = sc.textFile('document.txt')
-#Function to count the characters
->>> def char_counts( line):
-...     #doesnt count the newline characters [wc does]
-...     return len( list(line))
-...
->>> rdd.map(lambda line: char_counts(line)).reduce(lambda c1,c2: c1 + c2)
+>>> rdd.map( lambda line: len(line.split())).reduce(lambda c1,c2: c1 + c2)
 >>>
+```
+Or more neatly
+```
+>>> rdd.map( lambda line: len(line.split())).sum()
 ```
