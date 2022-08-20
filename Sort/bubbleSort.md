@@ -8,7 +8,7 @@
 Bubble Sort(list)
 {
     #Sorts in ascending order
-    for i in range(0, length(list))
+    for i in range(0, (length(list)-1))
     {
         changed = False  #to denote if any change occurred in the i'th iteration
         for j in range(0, i)
@@ -32,7 +32,7 @@ Bubble Sort(list)
 
 # Time Complexity
 ```
-    for i in range(0, length(list)) ---O(n)
+    for i in range(0, (length(list)-1)) ---O(n)
     {
         .
         -------------------------------O(1)
@@ -64,4 +64,31 @@ Bubble Sort(list)
 
 <br><br>
 
+# Implementations
+### C
+```
+void BubbleSort(int* arr, int n)
+{
+    //n = number of elements in the array arr
+    for(int i=0; i<n-1; i++)
+    {
+        bool changed = false;
+        for(int j=0; j<n-i-1; j++)
+        {
+            if( arr[j]>arr[j+1])
+            {
+                int tmp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = tmp;
+                changed = true;
+            }
+        }
+        if( changed != true )
+        {
+            break;  //exit out of the 'outer loop'
+        }
+    }
+}
+```
+<br><br>
 # Variations
