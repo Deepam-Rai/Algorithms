@@ -1,30 +1,28 @@
 # Bubble Sort
 ## Notations
->list: list of items
->- Indexing starts from 0.   
->- list[i] indexes i'th element of the list  
->- $n$ = number of items in the list
+>$list:$ list of items
+>- Indexing starts from $0$.   
+>- $list[i]$ indexes $i'th$ element of the list.  
+>- $n$ = number of items in the list.
 ```
 Bubble Sort(list)
 {
     #Sorts in ascending order
+    #in-place sorting
     for i in range(0, (length(list)-1))
     {
-        changed = False  #to denote if any change occurred in the i'th iteration
-        for j in range(0, i)
+        changed = False  #change in the i'th iteration
+        for j in range(0, n-i-1)
         {
-            if ( list[i]>list[j])   #'>'Sorts in ascending order
+            if ( list[j]>list[j+1])   #'>'Sorts in ascending order
             {
-                #swap(list[i], list[j])
-                tmp = list[i]
-                list[i] = list[j]
-                list[j] = tmp
+                swap list[j] and list[j+1]
                 changed = True
             }
         }
         if (changed == False)
         {
-            exit    #The sorting was done.
+            exit    #List is sorted.
         }
     }
 }
@@ -35,32 +33,31 @@ Bubble Sort(list)
     for i in range(0, (length(list)-1)) ---O(n)
     {
         .
-        -------------------------------O(1)
+        ---------------------------O(1)
         .
-        for j in range(0, i)    -------O(n)
+        for j in range(0, n-i-1) --O(i); n+(n-1)+...+1;
         {
             .
-            ---------------------------O(1)
+            -----------------------O(1)
             .
         }
         .
-        -------------------------------O(1)
+        ---------------------------O(1)
         .
     }
 ```
-> 1. **Worst Case**$= O(n*n) = O(n^2)$  
+> 1. **Worst Case**$= O(n*(n+1)/2) = O(n^2)$  
 >> - _The list is oppositely ordered; here descending._
 >> - The outer loop will run $n$ times.
->> - The inner loop will run $i'th$ times in i'th iteration.
+>> - The inner loop will run $(n-i)$ times in $i'th$ iteration.
 > 2. **Average case** $= O(n^2)$  
 > 3. **Best Case** $= O(n)$
 >> - _The list is already sorted._
->> - The outer loop will run 1 time.  
+>> - The outer loop will run $1$ time.  
 >> - The inner loop will run $n$ times.
->> - The if-else check with 'changed' flag will end the algorithm.
 # Space Complexity
 > $O(1)$
->> The space used is fixed and isn't dynamic.
+>> The space used is fixed; isn't dynamic.
 
 <br><br>
 
@@ -69,7 +66,6 @@ Bubble Sort(list)
 ```
 void BubbleSort(int* arr, int n)
 {
-    //n = number of elements in the array arr
     for(int i=0; i<n-1; i++)
     {
         bool changed = false;
@@ -91,4 +87,15 @@ void BubbleSort(int* arr, int n)
 }
 ```
 <br><br>
+
 # Variations
+<!-- #TODO Add variations. -->
+# Advantages
+- Its an in-place sorting algorithm.
+- Just one iteration is done for a sorted list.
+# Disadvantages
+- There are better algorithms with time complexity lesser than $O(n^2)$.
+
+# Points
+- Worst Time complexity $O(n^2)$ occurs when the list is sorted in opposite order.
+- Performing sorting on pointers to the data is more efficient than sorting data itself, as swapping pointer values is lighter.
