@@ -18,7 +18,9 @@
 
 >Output:
 
-# PySpark Implementation:
+# Implementation:
+
+## Pyspark:
 ```
 #Taking the document as RDD
 >>> rdd = sc.textFile('document.txt')

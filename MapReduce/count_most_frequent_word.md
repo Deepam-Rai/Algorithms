@@ -81,3 +81,16 @@ Reduce( (fixed_key,list_of_values))
 }
 ```
 >Output: (word,f) where 'word' is the most frequent word in the document appearing 'f' times.
+
+# Implementation
+## Pyspark
+```
+>>> rdd = sc.textFile('path/document.txt')
+>>> rdd.flatMap(lambda line: line.split()).map(lambda word: (word,1)).reduceByKey(lambda v1, v2: v1+v2).sortBy(lambda pair: pair[1], ascending=False).first()
+```
+Explanation:
+1. ```rdd.flatMap(lambda line: line.split())```: Map gets a line which is splits into words.
+2. ```.map(lambda word: (word,1))```: Makes pair (word,1) so that counting can be done next.
+3. ```.reduceByKey(lambda v1, v2: v1+v2)```: For each unique word add their values, which eventually gives us the frequency of that word in the document.
+4. ```.sortBy(lambda pair: pair[1], ascending=False)```: For the pair (word, frequency) sort it by frequency in descending order.
+5. ```.first()```: The top element is the most frequent word in the document.

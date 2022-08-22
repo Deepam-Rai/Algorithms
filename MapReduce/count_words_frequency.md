@@ -8,7 +8,7 @@ A massive document is divided into chunks and stored at different data nodes.
 To count the number of occurrences of each word in the document.
 
 ## **Solution:**
-### **Approaching the problem:**
+### Approaching the problem:
 1. A word may occur multiple times in the document and thus may be present at multiple chunks. We need to collect the number of occurrences from each chunk.
 2. The sort and shuffle phase collects all the values, from across the Map function output, for a specific key and pairs it with that key, and it does this for all unique keys.
 3. Thus if we make the words themselves as key in the Map output with their number of occurrence as paired value then sort and shuffle will collect all number of occurrences of that key and pair it with that word and provide to reduce phase.
@@ -16,7 +16,9 @@ To count the number of occurrences of each word in the document.
 
  The implementation for Map and Reduce is as follows:
 
-## **Map:**
+<br>
+
+## Map:
 
 >Input: (a line from the chunk) at a time.  
 
@@ -44,7 +46,9 @@ MyMap( (line,line))
 
 Thats it! After this implicitly Framework hashes each output into appropriate intermediate file.
 
-## **Sort and Shuffle(Performed by MapReduce Framework):**
+<br>
+
+## Sort and Shuffle(Performed by MapReduce Framework):
 The below input comes from all intermediate files of all Map tasks.  
 >Input: (word, 1) pairs for all words in the document.
 
@@ -52,7 +56,10 @@ Here for each unique word following is done:
 1. Get all the values for that unique word from the intermediate files from all Map tasks.
 2. Create (word, [1,1,...,1]) pair and provide to Reduce function.
 >Output: (word, [1,1,...,1,1]) for each unique word in the document and append it into reduce input file.
-## **Reduce:**
+
+<br>
+
+## Reduce:
 >Input: (reduce_input_file) created after sort and shuffle.
 
 ```
@@ -81,7 +88,7 @@ MyReduce( (word, list_of_values))
 
 The final output is present in parts in multiple reduce nodes. Master node aggregates all of them into a single file.
 
-# **Variation with Combiners:**
+# Variation with Combiners:
 **Inefficiency in above algorithm:** A given word can occur n>1 times in a chunk. As per above algorithm the Map task will produce (word,1) pair n number of times. And these n pairs might be communicated to other compute nodes when needed. But the same task can be done by 
 >(word,n) instead of (word,1) n times.
 
@@ -112,3 +119,17 @@ And for Reduce algorithm input will change but the algorithm itself and the outp
 >Output: (word,n) for each unique word 'word' occurring 'n' times in the document.
 
 >>Note that above combiner operation was possible only because the operation(Addition) that we do in the Reduce function is Associative and Commutative in nature.
+
+<br><br>
+
+# Implementation
+## Pyspark
+```
+>>> rdd = sc.textFile('path/document.txt')
+>>> rdd.flatMap(lambda line: line.split()).map(lambda word: (word,1)).reduceByKey(lambda v1, v2: v1+v2).collect()
+```
+Explanation:
+1. ```rdd.flatMap(lambda line: line.split())```: Map gets a line which is splits into words.
+2. ```.map(lambda word: (word,1))```: Makes pair (word,1) so that counting can be done next.
+3. ```.reduceByKey(lambda v1, v2: v1+v2)```: For each unique word add their values, which eventually gives us the frequency of that word in the document.
+4. ```.collect()```: Do not use this for large documents, instead store the output in another variable. 
