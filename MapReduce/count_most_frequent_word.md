@@ -40,7 +40,7 @@ MyMap( (line,line))
 }
 ```
 >Output: (word,1) for each word in the line given.
-## **Reduce_Reduce:**
+## **Reduce_First:**
 >Input: (word, [1,1,..,1]) for each unique word in the document.
 ```
 Reduce( (word, list_of_values))

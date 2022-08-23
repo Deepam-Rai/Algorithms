@@ -38,7 +38,7 @@ Thus for every task we can have vector x readily available in local main memory 
 ## Approaching the problem:
 1. We need to do:  
 $\large b_j = A_{i1}*x_1 + A_{i2}*x_2 + .. + A_{in}*x_n$
-2. In map when we get the $A_{ij}$ we have $x_j$ to multiply with in main memory.
+2. In map when we get the $A_{ij}$ we have $x_j$ to multiply that with in main memory.
 3. Further we know that the above product is part of $b_j$. But at a time we will only have one product $A_{ij}*x_j$ with us in a map function.
 4. And such products we need to sum up to get $b_j$,now to sum up all of them we can send all of them to one reduce function. And to do so we should use same key for all of them - in this case $j$ because it forms part of $b_j$.
 5. Thus in map we just multiply them and set up the key.
