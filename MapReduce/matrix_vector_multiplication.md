@@ -1,6 +1,6 @@
 # Matrix Vector Multiplication
 
->Matrix A = $$\begin{bmatrix}
+>Matrix $A$ = $$\begin{bmatrix}
 a_{11} & a_{12} & ... & a_{1n}  \\ 
 a_{21} & a_{22} & ... & a_{2n}  \\ 
 .&.&&. \\ 
@@ -9,7 +9,7 @@ a_{m1} & a_{m2} & ... & a_{mn}
 \end{bmatrix}$$
 $a_{ij}$ denotes element at i'th row and j'th column.
 
->Vector x =$$\begin{bmatrix} 
+>Vector $x$ =$$\begin{bmatrix} 
 x_1 \\ x_2 \\ .\\.\\. \\ x_n
 \end{bmatrix}$$
 $x_j$ denotes j'th element of x.
@@ -34,7 +34,7 @@ $\large b_j = A_{i1}*x_1 + A_{i2}*x_2 + .. + A_{in}*x_n =\sum_{j=1}^{n}{A_{ij}x_
 .  
 Thus at a time we wil get triplet (i,j,A<sub>ij</sub>) - one element of the matrix.
 # Case 1: Vector x fits in main memory
-Thus for every task we can have vector x readily available in local main memory of compute nodes.
+Thus for every task we can have vector $x$ readily available in local main memory of compute nodes.
 ## Approaching the problem:
 1. We need to do:  
 $\large b_j = A_{i1}*x_1 + A_{i2}*x_2 + .. + A_{in}*x_n$
@@ -69,10 +69,9 @@ Reduce(( j, [Aj1*x1, Aj2*x2, ..., Ajn*xn]))
 }
 ```
 >Output: $(j, b_j)$
-# Case 2: Vector x doesn't fits in main memory
-The vector x needs to be fetched from DFS in parts.
-> Solution: We partition the vector x and at a time we will have a part of x in our main memory.
-
-> Partitioned $x$:
-## Approaching the problem:
-1. 
+# Case 2: Vector x doesn't fit in main memory
+## Solution:
+1. Partition the vector $x$ into $n$ parts $x^{(1)}, x^{(2)},...,x^{(n)}$ and at a time we will fetch part of $x$ in our main memory.  
+2. Partition $A$ also into same number of partitions _vertically_ - $A^{(1)},A^{(2)},...,A^{(n)}$ .
+>$x^{(k)}$ and $A^{(k)}$ represents the $k'th$ partition of $x$ and $A$ respectively.
+3. If we get $A^{(k)}$ and $x^{(k)}$ together then for them the same map and reduce functions from Case-1 can be used.
