@@ -47,13 +47,28 @@ $\Large c_{ij}= \sum_{k=1}^n a_{ik}*b_{kj}$ for $1\le i\le m;$  $1\le j\le p;$
 
 ## Phase-1: Just Multiplications
 ## Map-1
->Input: $('A',i,k, A_{ik})$ or $('A',i,k, A_{ik})$ where  $'A'$ or $'B'$ is just to indicate if it comes from $A$ or $B$.
+>Input: $('A',i,k, A_{ik})$ or $('B',k,j, B_{kj})$ where  $'A'$ or $'B'$ is just to indicate if it comes from $A$ or $B$.
 ```
+Map1( ('M',r,c,m))
+{
+    if ('M'=='A')
+    {
+        Output( (c,('M',r,m)))
+    }
+    else
+    {
+        Output( (r,('M',c,m)))
+    }
+}
 ```
->Output: $(k,('A',i))$ or $(k,('B',j))$ for respective input.
+>Output: $(k,('A',i,A_{ik}))$ or $(k,('B',j,B_{kj}))$ for respective input.
 ## Reduce-1
->Input: $(k, [('A',1),('A',2)...,('A',n),('B',1),('B',2),...,('B',n)])$
+>Input: $(k, [('A',1,A_{1k}),('A',2,A_{2k})...,('A',m,A_{mk}),('B',1,B_{k1}),('B',2,B_{k2}),...,('B',p,B_{kp})])$
 ```
+Reduce1( (k,[('A',1,A1k),('A',2,A2k)...,('A',m,Amk),('B',1,Bk1),('B',2,Bk2),...,('B',p,Bkp)]))
+{
+    
+}
 ```
 >Outputs: $((i,j),P_{ikj})$ where $P_{ikj}=A_{ik}*B_{kj}$
 ## Phase-2: Just Additions

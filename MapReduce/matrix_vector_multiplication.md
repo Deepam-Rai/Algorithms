@@ -19,7 +19,7 @@ b_1 \\ b_2 \\ .\\.\\. \\ b_n
 \end{bmatrix}$$ 
 $b_j$ denotes j'th element of b.
 
->For a given matrix $A$ and vector  $x$ we will calculate $b$ as $Ax=b$
+>For a given matrix $A$ and vector  $x$ we will calculate $b$ as $Ax=b$Solu
 
 > We note that  
 $\large b_j = A_{i1}*x_1 + A_{i2}*x_2 + .. + A_{in}*x_n =\sum_{j=1}^{n}{A_{ij}x_j}$
