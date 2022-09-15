@@ -1,11 +1,12 @@
 # KNN (K Nearest Neighbours)
 
 - It is a classification technique for multi-class classification problem.
+- It can be used for regression also.
 - It approaches the problem from geometrical point of view, thus by core it is a non-probabilistic technique.
 
 ## Hyperparameter:
 1. $k$: number of neighbours to consider while computing the class of a node.
-> It is suggested to NOT keep $k$ as multiple of number of classes in the dataset. If done so the count of classes in neighbours may tie, leaving algorithm in dilemma in choosing label.
+> For classification it is suggested to NOT keep $k$ as multiple of number of classes in the dataset. If done so the count of classes in neighbours may tie, leaving algorithm in dilemma in choosing label.
 >> e.g, For binary classification if $k$ be given 8 and if 4 of the neighbours have one class while other four have another class then ambiguity occurs in classifying new datapoint.
 
 
@@ -18,9 +19,13 @@
 ```
 1. Calculate distances between $x$ and all datapoints in the train dataset.
 2. Sort the distances in ascending order and take first $k$ of them to get k-nearest neighbours of $x$.
-3. Count the classes of these $k$ nearest neighbours are counted.
-4. Determine the class with the highest frequency, and that is considered as the class of $x$. 
-Note: Tie in frequencies are not expected to occur as $k$ is not kept as multiple of the classes in the dataset.
+3. Count the classes of these $k$ nearest neighbours.
+4.  
+    IF classification:
+        Determine the class with the highest frequency, and that is considered as the class of $x$. 
+        Note: Tie in frequencies are not expected to occur as $k$ is not kept as multiple of the classes in the dataset.
+    ELSE IF regression:
+        Return the mean of class values in k nearest neighbours.
 ```
 
 # Implementation
@@ -33,10 +38,11 @@ class KNN():
     '''
     Implementing KNN classification algorithm using numpy.
     X: list of observations excluding their class column.
-    y: list of target variables; Classes of respective datapoints in X.
+    y: list of target variables; numerical datatype; Classes of respective datapoints in X.
     k: Hyperparameter k; number of neighbours to consider.
+    regression: False->Returns most frequent class-label; True: Returns the mean of labels.
     '''
-    def __init__(self,k, X=None,y=None):
+    def __init__(self,k, X=None,y=None, regression=False):
         self.X = np.array(X)
         self.y = np.array(y)
         if self.X.shape[0] != self.y.shape[0]:
@@ -50,6 +56,7 @@ class KNN():
             print("Error: k should not be a multiple of number of classes in the dataset.")
         else:
             self.k=k
+        self.regression= regression
     
     def __predict(self,x):
         '''
@@ -61,9 +68,14 @@ class KNN():
         distances = self.__get_distances(x) #gets distance of x from all points in X
         neighbours = self.__get_K_neighbours(distances) #returns 'indexes' of k nearest neighbours
         labels = self.__get_labels(neighbours) #using the 'indexes' returns their labels.
-        #return the most frequent label
-        unique, indexes = np.unique(labels, return_counts=True)
-        return unique[indexes.argmax()]
+        if self.regression is False:
+            #return the most frequent label
+            unique, indexes = np.unique(labels, return_counts=True)
+            pred = unique[indexes.argmax()]
+        else:
+            #return the mean of labels
+            pred = labels.mean()
+        return pred
     
     def predict(self, Xtest):
         '''Similar to self.__predict() but can work for multiple datapoints.'''
@@ -124,4 +136,28 @@ class KNN():
         return self.y
     def getClasses(self):
         return self.classes
+```
+### Use case (.ipynb - IPython Notebook):
+```Python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Dataset
+X = np.array([[1,4,0],[2,2,0],[1,2,0],[2,3,0],[3,4,0],[3,5,0], [3.5,6,0], [2,7,0],[4,3,0],
+    [5,5,1],[6,7,1], [6,5,1],[7,6,1],[7,4,1],[7,8,1],[8,6,1],[6,8,1]])
+# Visualizing Dataset
+MAXX = MAXY = 11
+sns.scatterplot(x=X[:,0], y= X[:,1], hue=X[:,2])
+plt.axis(xmin=0,xmax=MAXX, ymin=0,ymax=MAXY)
+plt.xticks( np.arange(MAXX,step=1))
+plt.yticks( np.arange(MAXY,step=1))
+plt.show()
+
+#Classification
+KModel = KNN(X=X[:,:2], y=X[:,2],k=5, regression=False) #Creating the model
+predicted_classes = KModel.predict([[5,6],[0,0],[10,10]])
+
+#Regression
+KModel = KNN(X=X[:,:2], y=X[:,2],k=5, regression=True) #Creating the model
+predicted_values = KModel.predict([[5,6],[0,0],[10,10]])
 ```
