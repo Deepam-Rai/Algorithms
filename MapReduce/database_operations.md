@@ -45,6 +45,10 @@ Map( (t,c))
     {
         Output( (t,t))
     }
+    else
+    {
+        Output( (None,None)) #Map HAS to produce (key,value) output
+    }
 }
 ```
 >Output: (t,t) such that 't' satisfies condition c.
@@ -69,7 +73,7 @@ Reduce( (t, [t,t,...,t]))
 ```
 Map(t,R)
 {
-    Output( (t,R))
+    Output( (t,(t,R)))
 }
 ```
 >Output: (t,R) for every tuple 't' of both relation A or B.
@@ -101,10 +105,7 @@ Reduce( (t, [ (t,A),(t,A),...,(t,A), (t,B),(t,B),...,(t,B)]))
 ## Map:
 >Input: Tuple 't' and relation R.
 ```
-Map( (t,R))
-{
-    Output( (t, R))
-}
+Map -> Identity
 ```
 >Output: (t,R) for every tuple 't' of both A and B.
 ## Reduce:
@@ -133,10 +134,7 @@ Reduce( (t,[A,A,...,A,B,B,...,B]))
 ## Map:
 >Input: Tuple 't' and relation R.
 ```
-Map( (t,R))
-{
-    Output( (t,R))
-}
+Map-> Identity
 ```
 >Output: (t,R) for every tuple 't' of both A and B.
 ## Reduce:
