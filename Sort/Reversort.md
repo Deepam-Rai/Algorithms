@@ -1,5 +1,5 @@
 
-# Algorithm
+# Reversort Algorithm
 Assumptions;
 1. The elements in the list L are unique.
 
